@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Letters....💌</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #fff0f5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #c71585;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 20px;
+      max-width: 700px;
+      width: 100%;
+      margin-top: 30px;
+    }
+
+    .card {
+      background: #fff;
+      border: 2px solid #c71585;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      user-select: none;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+      background: #ffe4ec;
+    }
+
+    .modal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+      padding: 15px;
+      box-sizing: border-box;
+    }
+
+    .modal-content {
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      max-width: 500px;
+      width: 90%;
+      box-shadow: 0 6px 10px rgba(0,0,0,0.2);
+      position: relative;
+      max-height: 80vh;
+      overflow-y: auto;
+      font-size: 1.1rem;
+      line-height: 1.5;
+      color: #333;
+    }
+
+    #letterText {
+  text-align: center;
+  padding: 10px 20px;
+  /* You can also adjust font size or line height if you want */
+}
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 22px;
+      cursor: pointer;
+      color: #888;
+      user-select: none;
+      z-index: 1001;
+    }
+
+    .close-btn:hover {
+      color: #c71585;
+    }
+
+
+    /* Confetti canvas style */
+    #confettiCanvas {
+      position: fixed;
+      pointer-events: none;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1000;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>💌 Open When…</h1>
+
+  <div class="grid">
+    <div class="card" onclick="openLetter(0)">💗 Open when you miss me</div>
+    <div class="card" onclick="openLetter(1)">😔 Open when you feel lonely</div>
+    <div class="card" onclick="openLetter(2)">😴 Open when you’re tired</div>
+    <div class="card" onclick="openLetter(3)">🌙 Open when you can’t sleep</div>
+    <div class="card" onclick="openLetter(4)">😣 Open when you’re stressed</div>
+    <div class="card" onclick="openLetter(5)">😵‍💫 Open when you feel Exhausted</div>
+    <div class="card" onclick="openLetter(6)">🎉 Open when you’re excited about something</div>
+    <div class="card" onclick="openLetter(7)">😐 Open when you feel bored</div>
+    <div class="card" onclick="openLetter(8)">😞 Open when you’re feeling down</div>
+    <div class="card" onclick="openLetter(9)">😡 Open when you’re angry from me</div>
+    <div class="card" onclick="openLetter(10)">💖 Open when you want to know why I love you</div>
+    <div class="card" onclick="openLetter(11)">🔥 Open when you need motivation</div>
+    <div class="card" onclick="openLetter(12)">🏆 Open when you’re proud of yourself</div>
+    <div class="card" onclick="openLetter(13)">🤔 Open when you feel insecure</div>
+    <div class="card" onclick="openLetter(14)">🤯 Open when you’re worried about the future</div>
+    <div class="card" onclick="openLetter(15)">🤗 Open when you need a hug (virtual one included!)</div>
+    <div class="card" onclick="openLetter(16)">🌸 Open when you’re feeling grateful</div>
+    <div class="card" onclick="openLetter(17)">🥲 Open when i said something harsh</div>
+        <div class="card" onclick="openLetter(18)">🫂 Open when You feel no one understands you</div>
+    <div class="card" onclick="openBirthdayLetter()">🎂 It's Your Birthday</div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal()">✖</span>
+      <p id="letterText">Loading...</p>
+    </div>
+  </div>
+
+  <!-- Confetti Canvas -->
+  <canvas id="confettiCanvas"></canvas>
+  <br>
+  <p style="text-align: center; color: #c71585; font-size: 1rem;">Made with 💖 by Sohangi Anirban Bhattacharjee 
+    <br>
+     NOTE : Okayyy i took help from ChatGPT to make this page. Itni achi coding nahi aati mujhe. But but but Letters maine hi likhe hai thik hai? So don't think i copied it from somewhere.
+  </p>
+ 
+
+  <script>
+    const letters = [
+      "Hi Handsome💖 i miss you moreeeeeeeeeeeeeeeeeeeee bohot zyaada we will meet soon chill okay? you want to talk then text me or call me utha lungi i love you my cutie pie",
+      "Terry yaaarrrr hun main tumhare sath close your eyes imagine me there tapli maarte huye hehehhehe I’m with you, always okay?💕.",
+      "Feeling tired is okay — rest lo, recharge yourself eat something play game gaane sunlo, and know I’m proud of everything you do. 🌙✨",
+      "Can’t sleep? Me neither sometimes. Imagine me there okay? Cuddling you and sleeping. You’re safe, always 💤🌙.",
+      "Terry meri jaan you’re stronger than any challenge, and I’m cheering for you always. Duniya ka saara stress akele mat handle karo tell me kya hua hai just so uk i can see whenever u open it i get notification banayi hi iss tareeke ki hai so chup chap BATA DO MUJHEEEE🌸",
+      "Ik college tough hai sab tough hai but you’ve got this — and I’ve got you. Kisi cutie pie ne mujhe ek baar kaha tha this too shall pass right? Same for you terry 💖",
+      "Excited about something? That sparkle in your eyes makes me smile — share it with me Abhi ke abhiiiiii! 🎉",
+      "Bored? Skills pe kaam karlo editing karlo game khel lo, ya kuch aur jo tumhe pasand ho except irritating me okay? I’m here to keep you company. 😄",
+      "Feeling down? Here’s a virtual hug 🤗 and a reminder you’re loved more than words can say.",
+      "Angry? 5 seconds rule sir you're breaking it 5 sec se zyaada gussa karn allowed nahi haiiiiiii❤️‍🔥",
+      "Why do I love you? Because you’re you — kind, funny, cute and so incredibly special to me. Tum best ho the bestest ho meri jaan. I love your eyes your smile your face your intelligence you irritating me you bullying me you being there for me whenever i need you and everything about you. I promise i would never leave you i love you more than anything anyone💖",
+      "Need motivation? Remember how far you’ve come. Yaad hai when you were telling those school stories ho gaya na paar yeh bhi ho jayega cutie pie don't worry. You’re amazing and unstoppable. 💪",
+      "Proud of yourself? You should be! Celebrate every win, big or small. Merko bhi bata dena chup chap i can see when u open it sir🎉",
+      "Feeling insecure? You’re perfect just the way you are yaar. I love every part of you.I love you more than anything 🌟",
+      "Worried about the future? Whatever comes, we’ll face it together. Hand in hand. Main hun tumhare sath jaan. After all i'm Sohangi Anirban Bhattacharjee right?🤝",
+      "Virtual hug coming your way! 🤗 Remember, I’m always here for you. You can video call me sir",
+      "Feeling grateful? So am I — for you, for us, for every moment we share. Share with me naa🌸",
+      "I'm sorry if I said something harsh. I never meant to hurt you. I would rather take a bullet than hurt you tbh. I love you more than anything yaarr main sapne mein bhi tumhe galti se bhi hurt kar deti hun rone lagti hun tbh🥲🥲 \n Sorryyyy",
+      "I’m so sorry you’re feeling this way right now. I wish I could be right there with you and just tighly hug you. See i get it koi nahi samajhta tumhe but i do. Maybe not completely but i do understand you. Ho sakta hai kabhi main bhi samajh nahi paayi tumhe but that doesn't mean you don't have anyone with you. You have me. Always and forever okay? I love you more than anything and i will always be there for you. I promise. 🫂",
+      "🎉 HAPPY BIRTHDAY MR TERRY!!! 🎂🥳🎈💖 I love you and aaj ka din tumhare se zyada mere liye special hai my favorite person came into the world today. Its my favourite day udk how special u are for me and how special today's day is for me. Sabse phela wish mera hona chahiye isliye yeh phele se bana ke rakh rahi hehhehehe😁😁. And FYI you are not getting any sneakers Size-12 hai na?😁😁 Bohot maak uda rahe the na tum? Jao kuch nahi dungi 😑😑 Bhagwaan kisi ko bhej hi denge uske hath sneakers bhi🙂🙂 \nBut just so uk i love you alotttttttttt💋💋💋💋💋💋💋💋 \n ~Yours Sohangi Anirban Bhattacharjee💞💋"
+    ];
+
+    function openLetter(index) {
+      stopConfetti();
+      document.getElementById('letterText').innerText = letters[index];
+      document.getElementById('modal').style.display = 'flex';
+    }
+
+    function closeModal() {
+  document.getElementById('modal').style.display = 'none';
+  stopConfetti();
+}
+
+
+    function openBirthdayLetter() {
+  const today = new Date();
+  const birthday = { month: 6, day: 7 }; 
+
+  if (today.getMonth() + 1 === birthday.month && today.getDate() === birthday.day) {
+    openLetter(19);
+    startConfetti();
+  } else {
+    stopConfetti();
+    document.getElementById('letterText').innerText = 
+      "🎂 Nice try cutie pie but uk me na?😏 — this letter is only for your birthday! You can't open it before or after birthday sadly🥱😞";
+    document.getElementById('modal').style.display = 'flex';
+  }
+}
+    // Confetti effect code
+    const confettiCanvas = document.getElementById('confettiCanvas');
+    const ctx = confettiCanvas.getContext('2d');
+    let confettiPieces = [];
+    let animationFrameId;
+
+    function resizeCanvas() {
+      confettiCanvas.width = window.innerWidth;
+      confettiCanvas.height = window.innerHeight;
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class ConfettiPiece {
+      constructor() {
+        this.x = Math.random() * confettiCanvas.width;
+        this.y = Math.random() * confettiCanvas.height - confettiCanvas.height;
+        this.size = (Math.random() * 7) + 5;
+        this.speed = (Math.random() * 3) + 2;
+        this.angle = Math.random() * 360;
+        this.spinSpeed = (Math.random() * 0.2) + 0.1;
+        this.color = `hsl(${Math.random() * 360}, 70%, 60%)`;
+      }
+      update() {
+        this.y += this.speed;
+        this.angle += this.spinSpeed;
+        if (this.y > confettiCanvas.height) {
+          this.y = -this.size;
+          this.x = Math.random() * confettiCanvas.width;
+        }
+      }
+      draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.angle);
+        ctx.fillStyle = this.color;
+        ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size / 2);
+        ctx.restore();
+      }
+    }
+
+    function startConfetti() {
+      confettiCanvas.style.display = 'block';
+      confettiPieces = [];
+      for (let i = 0; i < 150; i++) {
+        confettiPieces.push(new ConfettiPiece());
+      }
+      animateConfetti();
+    }
+
+    function animateConfetti() {
+      ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+      confettiPieces.forEach(piece => {
+        piece.update();
+        piece.draw();
+      });
+      animationFrameId = requestAnimationFrame(animateConfetti);
+    }
+
+    function stopConfetti() {
+      confettiCanvas.style.display = 'none';
+      if(animationFrameId) cancelAnimationFrame(animationFrameId);
+    }
+  </script>
+
+</body>
+</html>
